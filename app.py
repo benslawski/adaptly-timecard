@@ -14,6 +14,9 @@ from flask.ext.security.datastore.sqlalchemy import SQLAlchemyUserDatastore
 from werkzeug import secure_filename
 import os
 
+## local modules
+from DBInterface import *
+
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -22,7 +25,18 @@ app.config['SECRET_KEY'] = 'VKqerq3E/adf23d0444'
 
 @app.route('/', methods=['GET'])
 def show_card():
-    return render_template('card.html')
+    jobs = getJobs()
+    return render_template('card.html', jobs=jobs)
+
+
+@app.route('/new_job/', methods=['POST'])
+def new_job():
+    return redirect('/')
+
+
+@app.route('/punch/', methods=['POST'])
+def punch():
+    return redirect('/')
 
 
 if __name__ == '__main__':
