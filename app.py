@@ -28,14 +28,15 @@ def show_card():
     jobs = getJobs()
     return render_template('card.html', jobs=jobs)
 
-
-@app.route('/new_job/', methods=['POST'])
-def new_job():
-    return redirect('/')
-
-
 @app.route('/punch/', methods=['POST'])
 def punch():
+    in_time = request.form['in_time'];
+    out_time = request.form['out_time'];
+    selected_job = request.form['selected_job']
+    print 'punch\t', selected_job
+    print in_time
+    print out_time
+    punchCard(selected_job, in_time, out_time) 
     return redirect('/')
 
 

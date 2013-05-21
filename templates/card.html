@@ -5,33 +5,38 @@
 </head>
 <body style="background-color:#f0f0ff">
     <title>Timecard</title>
-        <div style="position:absolute; width:40%; height:20%; top:40%; left:30%;" align=center>
-        <form>
+        <div style="position:absolute; width:40%; height:25%; top:35%; left:30%;" align=center>
+        <form action='/punch/' method='post'>
             <select name="selected_job">
             {% for job_name in jobs %}
                 <option>{{ job_name }}</option>
             {% endfor %}
             </select>
-            <div id="punch_in" onclick="punchIn();" onmouseover="this.style.cursor='pointer';" style="cursor:default; position:absolute; top:40%; width:40%; height:40%; left:30%; background-color:#322288; display:block; border-radius:50%;"></div>
-            <div id="punch_out" onclick="punchOut();" onmouseover="this.style.cursor='pointer';" style="cursor:default; position:absolute; top:40%; width:40%; height:40%; left:30%; background-color:#882232; display:none; border-radius:50%;"></div>
-            <input id="in_time" name="in_time" value="" type="text" style="display:none;">
-            <input id="out_time" name="out_time" value="" type="text" style="display:none;">
+            <div id="punch_in" onclick="punchIn();" onmouseover="this.style.cursor='pointer';" style="cursor:default; position:absolute; top:40%; width:40%; height:60%; left:30%; background-color:#322288; display:block; border-radius:50%;"></div>
+            <div id="punch_out" onclick="punchOut(); this.parentNode.submit();" onmouseover="this.style.cursor='pointer';" style="cursor:default; position:absolute; top:40%; width:40%; height:60%; left:30%; background-color:#882232; display:none; border-radius:50%;"></div>
+            <input id="in_time" name="in_time" type="hidden" value=""/>
+            <input id="out_time" name="out_time" type="hidden" value=""/>
         </form>
         </div>
     <script type="text/javascript">
+        var in_time, out_time;
         function punchIn() {
             $('#punch_in').css('display', 'none');
             $('#punch_out').css('display', 'block');
             document.body.style.backgroundColor = "#fff0f0";
-            var in_time = new Date().toUTCString();
+            in_time = new Date().toUTCString();
             $('#in_time').val(in_time);
         };
 
         function punchOut() {
             $('#punch_in').css('display', 'block');
             $('#punch_out').css('display', 'none');
-            document.body.style.backgroundColor = "#f0f0ff";
-            var out_time = new Date().toUTCString();
+
+            $('#punch_in').css('background-color', '#888832');
+            $('#punch_in').attr("onClick","");
+            document.body.style.backgroundColor = "#fffff0";
+
+            out_time = new Date().toUTCString();
             $('#out_time').val(out_time);
         };
     </script>

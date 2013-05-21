@@ -29,3 +29,24 @@ def getJobs():
             print '[ ERROR FETCHING JOB LIST ]', type(e), e.message
 
     return map(lambda k: k[0], results)
+
+
+def punchCard(job_name, start_t, end_t):
+    db = getDBhandle()
+
+    command = "INSERT INTO punches " \
+            + "VALUES (DEFAULT, " \
+                    + "'" + job_name + "', " \
+                    + "'" + start_t + "', " \
+                    + "'" + end_t + "')"
+    print command
+    while True:
+        try:
+            db.execute(command)
+            db.commit()
+            break
+        except Exception as e:
+            db.rollback()
+            print '[ ERROR PUNCHING CARD FOR ' + job_name + ' ]', type(e), e.message
+            sleep(.1)
+
